@@ -7,9 +7,7 @@ public class SwipeController : MonoBehaviour
     public Transform target;
 
     public bool isDrag = false;
-    private Vector3 _startMousePos;
     private Vector3 _lastMousePos;
-    private Vector3 _swipeDir;
     
     void Update()
     {
@@ -17,18 +15,20 @@ public class SwipeController : MonoBehaviour
         {
             Debug.Log("Touch");
             isDrag = true;
-            _startMousePos = Input.mousePosition;
         }
         
         if (isDrag && Input.GetMouseButton(0))
         {
-            _swipeDir = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0) - _startMousePos;
+            Debug.Log("Dragging");
+            Vector3 delta = Input.mousePosition - _lastMousePos;
+            target.Rotate(0f, delta.x * 0.1f, 0f, Space.World);
+            _lastMousePos = Input.mousePosition;
         }
         
         if (Input.GetMouseButtonUp(0))
         {
             isDrag = false;
-            _lastMousePos = Input.mousePosition;
+            Debug.Log("Touch End");
         }
     }
 }

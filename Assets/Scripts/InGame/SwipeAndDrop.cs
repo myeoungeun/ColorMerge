@@ -48,8 +48,6 @@ public class SwipeAndDrop : MonoBehaviour
         if (_lastMousePos.x <= -4) _lastMousePos.x = -4;
         else if (_lastMousePos.x >= 4) _lastMousePos.x = 4;
         
-        Debug.Log(_lastMousePos);
-        Debug.Log(_cube);
         if(_cube != null) Instantiate(_cube, _lastMousePos, Quaternion.identity, target);
     }
 }

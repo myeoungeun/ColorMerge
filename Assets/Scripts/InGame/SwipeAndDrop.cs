@@ -10,6 +10,7 @@ public class SwipeAndDrop : MonoBehaviour
     public bool isDrag = false;
     private Vector3 _lastMousePos;
     private GameObject _cube;
+    private float _sensitivity = 0.1f;
 
     void Start()
     {
@@ -26,7 +27,7 @@ public class SwipeAndDrop : MonoBehaviour
         if (isDrag && Input.GetMouseButton(0))
         {
             Vector3 delta = Input.mousePosition - _lastMousePos;
-            target.Rotate(0f, delta.x * 0.1f, 0f, Space.World);
+            target.Rotate(0f, delta.x * _sensitivity, 0f, Space.World); //회전
             _lastMousePos = Input.mousePosition;
         }
         
@@ -46,7 +47,7 @@ public class SwipeAndDrop : MonoBehaviour
         
         //좌우 거리 제한
         if (_lastMousePos.x <= -4) _lastMousePos.x = -4;
-        else if (_lastMousePos.x >= 4) _lastMousePos.x = 4;
+        if (_lastMousePos.x >= 4) _lastMousePos.x = 4;
         
         if(_cube != null) Instantiate(_cube, _lastMousePos, Quaternion.identity, target);
     }

@@ -2,13 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SwipeController : MonoBehaviour
+public class SwipeAndDrop : MonoBehaviour
 {
     public Transform target;
     public Camera camera;
 
     public bool isDrag = false;
     private Vector3 _lastMousePos;
+    private GameObject _cube;
+
+    void Start()
+    {
+        _cube = Resources.Load<GameObject>("Prefabs/Cube");
+    }
 
     void Update()
     {
@@ -36,10 +42,14 @@ public class SwipeController : MonoBehaviour
 
     private void ShapeDrop()
     {
+        _lastMousePos.y = 18;
+        
         //좌우 거리 제한
         if (_lastMousePos.x <= -4) _lastMousePos.x = -4;
         else if (_lastMousePos.x >= 4) _lastMousePos.x = 4;
         
         Debug.Log(_lastMousePos);
+        Debug.Log(_cube);
+        if(_cube != null) Instantiate(_cube, _lastMousePos, Quaternion.identity, target);
     }
 }

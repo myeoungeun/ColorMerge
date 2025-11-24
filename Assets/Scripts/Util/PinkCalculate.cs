@@ -25,12 +25,25 @@ public static class PinkCalculate
         Color.RGBToHSV(color1, out float h1, out float s1, out float v1);
         Color.RGBToHSV(color2, out float h2, out float s2, out float v2);
         
-        float hue = (h1 + h2) * 0.5f;
-        float sat = (s1 + s2) * 0.5f;
-        float val = (v1 + v2) * 0.5f;
+        // 가중치 = 채도 × 밝기
+        float w1 = s1 * v1;
+        float w2 = s2 * v2;
+
+        float wSum = w1 + w2;
+        if (wSum == 0) wSum = 1; // 0으로 나누기 방지
+
+        float hue = (h1 * w1 + h2 * w2) / wSum;
+        float sat = (s1 * w1 + s2 * w2) / wSum;
+        float val = (v1 * w1 + v2 * w2) / wSum;
         
         Color mergedColor = Color.HSVToRGB(hue, sat, val);
-        
+
+        bool isPink = PinkCheck(mergedColor);
+        if (isPink)
+        {
+            //도형 = 분홍일 때 해야되는 처리
+        }
+
         return mergedColor;
     }
 }

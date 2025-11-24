@@ -9,7 +9,7 @@ public class SwipeController : MonoBehaviour
 
     public bool isDrag = false;
     private Vector3 _lastMousePos;
-    
+
     void Update()
     {
         if (Input.GetMouseButton(0))
@@ -28,19 +28,18 @@ public class SwipeController : MonoBehaviour
         {
             isDrag = false;
             _lastMousePos = Input.mousePosition;
-            OnMouseDown();
+            _lastMousePos.z = Mathf.Abs(camera.transform.position.z - target.position.z); //카메라-타겟 거리
+            _lastMousePos = camera.ScreenToWorldPoint(_lastMousePos);
+            if(_lastMousePos.y > 10) ShapeDrop(); //도형 떨어뜨리기 -> 위에서만 동작
         }
     }
 
-    private void OnMouseDown()
+    private void ShapeDrop()
     {
-        Vector3 mousePosition = Input.mousePosition;
-        mousePosition.z = Mathf.Abs(camera.transform.position.z - target.position.z);
-        mousePosition = camera.ScreenToWorldPoint(mousePosition);
+        //좌우 거리 제한
+        if (_lastMousePos.x <= -4) _lastMousePos.x = -4;
+        else if (_lastMousePos.x >= 4) _lastMousePos.x = 4;
         
-        if (mousePosition.x <= -4) mousePosition.x = -4;
-        else if (mousePosition.x >= 4) mousePosition.x = 4;
-        
-        Debug.Log(mousePosition);
+        Debug.Log(_lastMousePos);
     }
 }

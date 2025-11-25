@@ -22,6 +22,7 @@ public enum ColorPhase
 public class DataManager : Singleton<DataManager>
 {
     public ColorSpawnData Color;
+    public ColorPhase Phase;
     
     private bool _isInitialized = false;
 

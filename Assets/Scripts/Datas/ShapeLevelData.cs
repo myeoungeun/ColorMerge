@@ -4,14 +4,15 @@ using UnityEngine;
 
 namespace PinkDatatable
 {
-    public partial class ColorSpawnData
+    public partial class ShapeLevelData : MonoBehaviour
     {
-        public ColorSpawnData GetColorSpawnData(int idx)
+        public ShapeLevelData GetColorSpawnData(int idx)
         {
-            if (ColorSpawnDataMap.ContainsKey(idx))
+            if (ShapeLevelDataMap.ContainsKey(idx))
             {
-                return ColorSpawnDataMap[idx];
+                return ShapeLevelDataMap[idx];
             }
+
             Debug.LogWarning($"ColorSpawnData with ID {idx} not found!");
             return null;
         }

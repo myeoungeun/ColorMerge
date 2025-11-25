@@ -29,7 +29,7 @@ public class ShapePhysicsData : ScriptableObject
 public class ShapeBase : MonoBehaviour
 {
     public Color shapeColor;
-    public ShapePhysicsData shapePhysicsData = new();
+    //public ShapePhysicsData shapePhysicsData = new();
 
     void Start()
     {

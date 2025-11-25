@@ -4,10 +4,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using GoogleSheet.Core.Type;
+using PinkDatatable;
 using UGS;
 using UnityEngine;
 using UnityEngine.Networking;
 
+[UGS(typeof(ColorPhase))]
 public enum ColorPhase
 {
     Early,
@@ -18,28 +21,17 @@ public enum ColorPhase
 
 public class DataManager : Singleton<DataManager>
 {
-    public ColorSpawnData colorSpawnData;
+    public ColorSpawnData Color;
     
     private bool _isInitialized = false;
-
-    protected override void Awake()
-    {
-        base.Awake();
-    }
 
     public void Initialize()
     {
         if (_isInitialized) return;
         UnityGoogleSheet.LoadAllData();
         
-        colorSpawnData = new ColorSpawnData();
+        Color = new ColorSpawnData();
         
         _isInitialized = true;
-        
-#if UNITY_WEBGL && !UNITY_EDITOR
-        StartCoroutine(Load());
-#else   
-        //LoadSaveData();
-#endif
     }
 }

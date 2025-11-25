@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(MeshRenderer), typeof(MeshFilter))]
-public class Tetrahedron : MonoBehaviour
+public class Tetrahedron : ShapeBase //todo : 얘 버그 있어서 사용 안하고있긴한데 고쳐야됩니다
 {
     public float size = 1.0f;
     public Vector3 offset = new Vector3(0, 0, 0);

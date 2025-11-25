@@ -62,7 +62,7 @@ namespace PinkDatatable
 		public System.Single spring;
 		public System.Single bounciness;
 		public System.Single correction;
-		public System.Single description;
+		public System.String description;
   
 
 #region fuctions

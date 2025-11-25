@@ -20,7 +20,7 @@ public static class PinkCalculate
         return pinkValue >= 70f; //분홍이면 리턴
     }
 
-    public static Color ShapeColorMerge(Color color1, Color color2)
+    public static Color ColorMerge(Color color1, Color color2) //색상 합치기
     {
         Color.RGBToHSV(color1, out float h1, out float s1, out float v1);
         Color.RGBToHSV(color2, out float h2, out float s2, out float v2);

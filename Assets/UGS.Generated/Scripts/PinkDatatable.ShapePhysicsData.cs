@@ -63,7 +63,7 @@ namespace PinkDatatable
 		public System.Single angularDrag;
 		public System.Single bounciness;
 		public System.Single friction;
-		public System.Single description;
+		public System.String description;
 		public System.String path;
   
 

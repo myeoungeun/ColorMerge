@@ -22,7 +22,8 @@ public enum ColorPhase
 public class DataManager : Singleton<DataManager>
 {
     public ColorSpawnData Color;
-    public ColorPhase Phase;
+    public ShapePhysicsData Physics;
+    public ShapeLevelData Level;
     
     private bool _isInitialized = false;
 
@@ -32,6 +33,8 @@ public class DataManager : Singleton<DataManager>
         UnityGoogleSheet.LoadAllData();
         
         Color = new ColorSpawnData();
+        Physics = new ShapePhysicsData();
+        Level = new ShapeLevelData();
         
         _isInitialized = true;
     }

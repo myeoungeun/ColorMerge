@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace PinkDatatable
 {
-    public partial class ShapeLevelData : MonoBehaviour
+    public partial class ShapeLevelData
     {
-        public ShapeLevelData GetColorSpawnData(int idx)
+        public ShapeLevelData GetShapeLevelData(int idx)
         {
             if (ShapeLevelDataMap.ContainsKey(idx))
             {

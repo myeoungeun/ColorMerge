@@ -8,7 +8,7 @@ public class Cube : ShapeBase
     {
     }
 
-    public override void Merge()
+    public override void ShapeMerge(int level)
     {
     }
 }

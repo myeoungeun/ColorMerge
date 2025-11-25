@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using PinkDatatable;
 using UnityEngine;
 
 public class SwipeAndDrop : MonoBehaviour
@@ -9,12 +10,13 @@ public class SwipeAndDrop : MonoBehaviour
 
     public bool isDrag = false;
     private Vector3 _lastMousePos;
-    private GameObject _cube;
+    private string _shapePath;
     private float _sensitivity = 0.1f;
+    private ShapePhysicsData physicsData;
 
     void Start()
     {
-        _cube = Resources.Load<GameObject>("Prefabs/Cube");
+        physicsData = DataManager.Instance.Physics;
     }
 
     void Update()
@@ -43,12 +45,18 @@ public class SwipeAndDrop : MonoBehaviour
 
     private void ShapeDrop()
     {
+        //높이 + 좌우 거리 제한
         _lastMousePos.y = 18;
-        
-        //좌우 거리 제한
         if (_lastMousePos.x <= -4) _lastMousePos.x = -4;
         if (_lastMousePos.x >= 4) _lastMousePos.x = 4;
-        
-        if(_cube != null) Instantiate(_cube, _lastMousePos, Quaternion.identity, target);
+
+        RandomShapeDrop();
+        if(_shapePath != null) Instantiate(Resources.Load<GameObject>(_shapePath), _lastMousePos, Quaternion.identity, target);
+    }
+    
+    private void RandomShapeDrop()
+    {
+        int range = Random.Range(0, 2);
+        _shapePath = physicsData.GetShapePhysicsData(range).path;
     }
 }

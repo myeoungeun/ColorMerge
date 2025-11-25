@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace PinkDatatable
 {
-    public partial class ShapePhysicsData : MonoBehaviour
+    public partial class ShapePhysicsData
     {
-        public ShapePhysicsData GetColorSpawnData(int idx)
+        public ShapePhysicsData GetShapePhysicsData(int idx)
         {
             if (ShapePhysicsDataMap.ContainsKey(idx))
             {

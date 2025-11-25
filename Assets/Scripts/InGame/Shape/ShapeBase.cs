@@ -53,6 +53,6 @@ public class ShapeBase : MonoBehaviour
     {
         level += 1;
         curLevel = shapeLevelData.GetShapeLevelData(level).level;
-        //크기 업그레이드
+        //크기 업그레이드 + 실제 도형에 적용
     }
 }

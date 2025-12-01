@@ -39,7 +39,7 @@ public class ShapeBase : MonoBehaviour
             
             //도형 합치기
             ShapeMerge(curLevel);
-            Destroy(otherShape.gameObject);
+            //Destroy(otherShape.gameObject);
         }
     }
 

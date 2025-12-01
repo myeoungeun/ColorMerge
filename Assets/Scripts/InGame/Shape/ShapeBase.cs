@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using PinkDatatable;
 using UnityEngine;
+using Util;
 
 public class ShapeBase : MonoBehaviour
 {
@@ -71,19 +72,39 @@ public class ShapeBase : MonoBehaviour
 
     private void InitColor()
     {
-        Debug.Log("color init");
         List<ColorSpawnData> curPhaseList = colorSpawnData.GetColorPhaseType(GameManager.Instance.ColorPhase);
-        int rand = Random.Range(0, curPhaseList.Count); //todo : 가중치별로 변경되도록 수정해야 됨
+        List<float> weightList = new();
         
-        ColorSpawnData pick = curPhaseList[rand];
-
+        foreach (var a in curPhaseList)
+            weightList.Add(a.weight);
+        
+        var index = RandomWeight.GetRandomIndex(weightList);
+        ColorSpawnData pick = curPhaseList[index]; //확률(가중치)별로 뽑기
+        
         float hueMin = pick.hueMin;
         float hueMax = pick.hueMax;
         float saturation = pick.saturation;
         float valueMin = pick.valueMin;
         float valueMax = pick.valueMax;
-        float weight = pick.weight; //가중치(확률)
         
-        color = Color.HSVToRGB(Random.Range(hueMin, hueMax) / 360f, saturation / 100f, Random.Range(valueMin, valueMax));
+        float hue = GetRandomHue(hueMin, hueMax) / 360f;
+        
+        color = Color.HSVToRGB(hue, saturation / 100f, Random.Range(valueMin, valueMax));
+    }
+
+    private float GetRandomHue(float min, float max)
+    {
+        if (min <= max) return Random.Range(max, min);
+        
+        //min > max 일 때 (350~20 이런류)
+        float range1 = 360f - min;
+        float range2 = max;
+        float totalRange = range1 + range2;
+        float r = Random.Range(0f, totalRange);
+        
+        if (r < range1) return r + min;
+        else return r - range1;
+        
+        return Random.Range(min, max);
     }
 }

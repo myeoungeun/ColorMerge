@@ -16,7 +16,7 @@ namespace PinkDatatable
             return null;
         }
         
-        public List<ColorSpawnData> GetColorPhaseType(ColorPhase phase) //enum에 해당하는 행들 리턴
+        public List<ColorSpawnData> GetColorPhaseType(ColorPhase phase)
         {
             List<ColorSpawnData> result = new List<ColorSpawnData>();
 

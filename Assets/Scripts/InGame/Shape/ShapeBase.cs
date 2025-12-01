@@ -7,6 +7,7 @@ using Util;
 public class ShapeBase : MonoBehaviour
 {
     public Color color;
+    protected Renderer rend;
     protected int curLevel;
     protected Rigidbody rb;
     protected Material mat; //시각용
@@ -16,7 +17,7 @@ public class ShapeBase : MonoBehaviour
     protected ShapePhysicsData shapePhysicsData;
     protected ColorSpawnData colorSpawnData;
 
-    void Awake()
+    protected void Awake()
     {
         shapeLevelData = DataManager.Instance.Level;
         shapePhysicsData = DataManager.Instance.Physics;
@@ -26,18 +27,18 @@ public class ShapeBase : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("start");
+        Debug.Log("ShapeBase Start");
         phyMat = new PhysicMaterial();
         rb = GetComponent<Rigidbody>();
-        Renderer rend = GetComponent<Renderer>();
+        rend = GetComponent<Renderer>();
         
         if (rend == null) return;
         mat = new Material(rend.material); //기존 메터리얼을 기준으로 새로운 인스턴스 생성
         rend.material = mat;
-
+        
         InitColor();
         rend.material.color = color; //초기 색상 지정
-
+        
         Init();
     }
 
@@ -56,21 +57,18 @@ public class ShapeBase : MonoBehaviour
         }
     }
 
-    public virtual void Init()
+    public virtual void Init() //각각의 물리 엔진
     {
-        colorSpawnData.GetColorSpawnData(1);
-        //기본 색상
-        //각각의 도형 물리 특징
     }
 
     public virtual void ShapeMerge(int level) //도형 합치기
     {
         level += 1;
         curLevel = shapeLevelData.GetShapeLevelData(level).level;
-        //크기 업그레이드 + 실제 도형에 적용
+        //todo : 크기 업그레이드 + 실제 도형에 적용
     }
 
-    private void InitColor()
+    protected void InitColor()
     {
         List<ColorSpawnData> curPhaseList = colorSpawnData.GetColorPhaseType(GameManager.Instance.ColorPhase);
         List<float> weightList = new();

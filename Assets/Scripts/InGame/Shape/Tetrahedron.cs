@@ -45,8 +45,10 @@ public class Tetrahedron : ShapeBase
         }
     }
 
-    void Start()
+    void Awake()
     {
+        base.Awake();
+        
         mesh = GetComponent<MeshFilter>().mesh;
         rb = GetComponent<Rigidbody>();
         mc = gameObject.GetComponent<MeshCollider>();

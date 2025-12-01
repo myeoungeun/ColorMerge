@@ -9,6 +9,9 @@ public class ShapeBase : MonoBehaviour
     protected int curLevel;
     protected ShapeLevelData shapeLevelData;
     protected ShapePhysicsData shapePhysicsData;
+    protected Rigidbody rb;
+    protected Material mat; //시각용
+    protected PhysicMaterial phyMat; //물리 충돌용
 
     void Awake()
     {
@@ -19,11 +22,15 @@ public class ShapeBase : MonoBehaviour
 
     void Start()
     {
+        phyMat = new PhysicMaterial();
+        rb = GetComponent<Rigidbody>();
         Renderer rend = GetComponent<Renderer>();
         
         if (rend == null) return;
-        rend.material = new Material(rend.material);
-        rend.material.color = color;
+        mat = new Material(rend.material); //기존 메터리얼을 기준으로 새로운 인스턴스 생성
+        rend.material = mat;
+        
+        rend.material.color = color; //초기 색상 지정
 
         Init();
     }

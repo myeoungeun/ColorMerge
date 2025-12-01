@@ -1,18 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using PinkDatatable;
 using UnityEngine;
 
 public class Sphere : ShapeBase
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void Init()
     {
+        ShapePhysicsData sphereData = shapePhysicsData.GetShapePhysicsData(1);
         
+        float mass = sphereData.mass;
+        float angularDrag = sphereData.angularDrag;
+        float bounciness = sphereData.bounciness;
+        float friction = sphereData.friction;
+        
+        rb = GetComponent<Rigidbody>();
+        rb.mass = mass;
+        rb.angularDrag = angularDrag;
+        phyMat.bounciness = bounciness;
+        phyMat.dynamicFriction = friction;
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void ShapeMerge(int level)
     {
-        
     }
 }

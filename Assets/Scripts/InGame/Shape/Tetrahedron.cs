@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using PinkDatatable;
 using UnityEngine;
 
 [RequireComponent(typeof(MeshRenderer), typeof(MeshFilter))]
@@ -13,6 +14,26 @@ public class Tetrahedron : ShapeBase
     Mesh mesh;
     Vector3[] vertices;
     int[] triangles;
+    
+    public override void Init()
+    {
+        ShapePhysicsData pyramidData = shapePhysicsData.GetShapePhysicsData(2);
+        
+        float mass = pyramidData.mass;
+        float angularDrag = pyramidData.angularDrag;
+        float bounciness = pyramidData.bounciness;
+        float friction = pyramidData.friction;
+        
+        rb = GetComponent<Rigidbody>();
+        rb.mass = mass;
+        rb.angularDrag = angularDrag;
+        phyMat.bounciness = bounciness;
+        phyMat.dynamicFriction = friction;
+    }
+
+    public override void ShapeMerge(int level)
+    {
+    }
 
     void OnValidate()
     {

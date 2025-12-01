@@ -13,7 +13,7 @@ public class SwipeAndDrop : MonoBehaviour
     private Vector3 _lastMousePos;
     private string _shapePath;
     private float _sensitivity = 0.1f;
-    private float _dragDistance = 0.2f; //드래그로 판단할 최소 이동량
+    private float _dragDistance = 1f; //드래그로 판단할 최소 이동량
     private ShapePhysicsData physicsData;
 
     void Start()
@@ -73,7 +73,7 @@ public class SwipeAndDrop : MonoBehaviour
     
     private void RandomShapeDrop()
     {
-        int range = Random.Range(0, 2);
+        int range = Random.Range(0, 3); // todo : 나중에 계속 도형 추가할 거라면 db 가져와서 개수 안에서 랜덤값 돌리는 걸로 수정 필요함 
         _shapePath = physicsData.GetShapePhysicsData(range).path;
     }
 }

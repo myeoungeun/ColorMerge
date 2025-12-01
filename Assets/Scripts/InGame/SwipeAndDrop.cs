@@ -34,7 +34,7 @@ public class SwipeAndDrop : MonoBehaviour
         {
             if (!isDrag)
             {
-                if (Vector3.Distance(Input.mousePosition, _beginMousePos) >= _dragDistance)
+                if (Vector3.Distance(Input.mousePosition, _beginMousePos) >= _dragDistance) //마우스 움직이는 거리 체크
                     isDrag = true;
             }
             if (isDrag)

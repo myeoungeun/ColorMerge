@@ -24,7 +24,6 @@ public class Tetrahedron : ShapeBase
         float bounciness = pyramidData.bounciness;
         float friction = pyramidData.friction;
         
-        rb = GetComponent<Rigidbody>();
         rb.mass = mass;
         rb.angularDrag = angularDrag;
         phyMat.bounciness = bounciness;

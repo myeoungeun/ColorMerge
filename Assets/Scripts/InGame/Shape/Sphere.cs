@@ -14,7 +14,6 @@ public class Sphere : ShapeBase
         float bounciness = sphereData.bounciness;
         float friction = sphereData.friction;
         
-        rb = GetComponent<Rigidbody>();
         rb.mass = mass;
         rb.angularDrag = angularDrag;
         phyMat.bounciness = bounciness;

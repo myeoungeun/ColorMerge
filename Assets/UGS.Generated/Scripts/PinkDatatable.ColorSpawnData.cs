@@ -66,8 +66,6 @@ namespace PinkDatatable
 		public System.Single valueMax;
 		public System.Single weight;
 		public System.String description;
-		public System.Int32 timeMin;
-		public System.Int32 timeMax;
   
 
 #region fuctions

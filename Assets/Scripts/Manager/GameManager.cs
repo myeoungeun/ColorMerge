@@ -6,6 +6,7 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     private float _time = 0;
+    private int _curScore = 0;
     private ColorPhase _colorPhase;
     public ColorPhase ColorPhase => _colorPhase;
     
@@ -38,5 +39,11 @@ public class GameManager : Singleton<GameManager>
         {
             _colorPhase = ColorPhase.Survival;
         }
+    }
+
+    public void AddScore(int score)
+    {
+        _curScore += score;
+        UIManager.Instance.UpdateScore(_curScore);
     }
 }

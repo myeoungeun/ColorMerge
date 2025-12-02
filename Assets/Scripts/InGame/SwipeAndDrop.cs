@@ -13,7 +13,7 @@ public class SwipeAndDrop : MonoBehaviour
     private Vector3 _lastMousePos;
     private string _shapePath;
     private float _sensitivity = 0.1f;
-    private float _dragDistance = 1f; //드래그로 판단할 최소 이동량
+    private float _dragDistance = 5f; //드래그로 판단할 최소 이동량
     private ShapePhysicsData physicsData;
 
     void Start()

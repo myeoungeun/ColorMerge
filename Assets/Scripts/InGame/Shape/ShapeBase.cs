@@ -14,6 +14,7 @@ public class ShapeBase : MonoBehaviour
     protected Material mat; //시각용
     protected PhysicMaterial phyMat; //물리 충돌용
     protected Transform t;
+    private bool becamePink;
     
     protected ShapeLevelData shapeLevelData;
     protected ShapePhysicsData shapePhysicsData;
@@ -50,9 +51,16 @@ public class ShapeBase : MonoBehaviour
         
         if (TypeAndLevelCheck(otherShape)) //otherShape가 같은 도형 + 같은 레벨이면
         {
-            //색상 합치기 todo : 체크 필요함
-            color = PinkCalculate.ColorMerge(color, otherShape.color);
+            //색상 합치기
+            color = PinkCalculate.ColorMerge(color, otherShape.color, out becamePink);
             GetComponent<Renderer>().material.color = color;
+            if (becamePink)
+            {
+                Debug.Log("분홍입니다!");
+                //Destroy(gameObject);
+                //터지는 효과
+                GameManager.Instance.AddScore(1);
+            }
             
             //도형 합치기
             ShapeMerge(curLevel);

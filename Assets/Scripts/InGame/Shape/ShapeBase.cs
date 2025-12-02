@@ -70,14 +70,14 @@ public class ShapeBase : MonoBehaviour
             
             //도형 합치기
             ShapeMerge(curLevel);
-            //Destroy(otherShape.gameObject);
+            Destroy(otherShape.gameObject);
         }
     }
 
     private IEnumerator ShapeDestroy(float delay)
     {
         yield return new WaitForSeconds(delay);
-        //Destroy(gameObject);
+        Destroy(gameObject);
     }
 
     private bool TypeAndLevelCheck(ShapeBase otherShape)

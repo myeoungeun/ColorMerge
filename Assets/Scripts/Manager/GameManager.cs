@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    private float _time = 0;
+    public float time = 0;
     private int _curScore = 0;
     private ColorPhase _colorPhase;
     public ColorPhase ColorPhase => _colorPhase;
@@ -17,25 +17,25 @@ public class GameManager : Singleton<GameManager>
     
     private void Update()
     {
-        _time += Time.deltaTime;
+        time += Time.deltaTime;
         LevelCurve();
     }
 
     private void LevelCurve()
     {
-        if (_time < 30)
+        if (time < 30)
         {
             _colorPhase = ColorPhase.Early;
         }
-        else if (_time >= 30 && _time < 60)
+        else if (time >= 30 && time < 60)
         {
             _colorPhase = ColorPhase.Mid;
         }
-        else if (_time >= 60 && _time < 120)
+        else if (time >= 60 && time < 120)
         {
             _colorPhase = ColorPhase.Late;
         }
-        else if (_time >= 120)
+        else if (time >= 120)
         {
             _colorPhase = ColorPhase.Survival;
         }

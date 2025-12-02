@@ -18,9 +18,9 @@ public class Line : MonoBehaviour
         {
             _time += Time.deltaTime;
             
-            if (CompareTag("gameOverLine") && _time >= 5f)
+            if (CompareTag("gameOverLine") && _time >= 7f)
             {
-                Debug.Log("게임 오버!");
+                GameManager.Instance.GameOver();
             }
             else if (CompareTag("warningLine") && _time >= 5f)
             {

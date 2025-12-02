@@ -29,6 +29,8 @@ public class Tetrahedron : ShapeBase
         rb.angularDrag = angularDrag;
         phyMat.bounciness = bounciness;
         phyMat.dynamicFriction = friction;
+        
+        base.Init();
     }
 
     void OnValidate()

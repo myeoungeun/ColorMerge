@@ -19,5 +19,7 @@ public class Sphere : ShapeBase
         rb.angularDrag = angularDrag;
         phyMat.bounciness = bounciness;
         phyMat.dynamicFriction = friction;
+        
+        base.Init();
     }
 }

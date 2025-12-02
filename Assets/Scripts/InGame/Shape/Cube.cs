@@ -19,5 +19,7 @@ public class Cube : ShapeBase
         rb.angularDrag = angularDrag;
         phyMat.bounciness = bounciness;
         phyMat.dynamicFriction = friction;
+
+        base.Init();
     }
 }

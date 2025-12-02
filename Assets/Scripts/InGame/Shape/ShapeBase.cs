@@ -87,6 +87,8 @@ public class ShapeBase : MonoBehaviour
 
     public virtual void Init() //각각의 물리 엔진
     {
+        LevelCheck();
+        ShapeSetting(curLevel);
     }
 
     public virtual void ShapeMerge(int level) //도형 합치기
@@ -94,6 +96,11 @@ public class ShapeBase : MonoBehaviour
         level += 1;
         if (level >= 7) level = 7; //현재는 하드코딩이라 나중에 더 추가할거라면 수정 필요함
         
+        ShapeSetting(level);
+    }
+
+    public void ShapeSetting(int level)
+    {
         ShapeLevelData curLevelData = shapeLevelData.GetShapeLevelData(level);
         curLevel = curLevelData.level;
         float scale = curLevelData.scale;
@@ -144,5 +151,31 @@ public class ShapeBase : MonoBehaviour
         else return r - range1;
         
         return Random.Range(min, max);
+    }
+
+    private void LevelCheck()
+    {
+        switch (GameManager.Instance.ColorPhase)
+        {
+            case ColorPhase.Early:
+                curLevel = 1;
+                break;
+            case ColorPhase.Mid:
+                int i = Random.value < 0.8f ? 1 : 2; //80%로 lv1, 20%로 lv2
+                curLevel = i;
+                break;
+            case ColorPhase.Late:
+                float r = Random.value;
+                int j = r < 0.6f ? 1 : r < 0.9f ? 2 : 3; //60% lv1, 30% lv2, 10% lv3
+                curLevel = j;
+                break;
+            case ColorPhase.Survival:
+                int f = Random.Range(0, 4);
+                curLevel = f + 1;
+                break;
+            default:
+                curLevel = 1;
+                break;
+        }
     }
 }

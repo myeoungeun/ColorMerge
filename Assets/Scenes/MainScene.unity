@@ -12531,7 +12531,7 @@ GameObject:
   - component: {fileID: 792328542}
   m_Layer: 0
   m_Name: WarningLine
-  m_TagString: Untagged
+  m_TagString: warningLine
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24215,7 +24215,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79f1f06f3a52f644892ce27554dd7a1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  field: {fileID: 11021588}
 --- !u!65 &792328543
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -36593,7 +36592,7 @@ GameObject:
   - component: {fileID: 1635093265}
   m_Layer: 0
   m_Name: GameOverLine
-  m_TagString: Untagged
+  m_TagString: gameOverLine
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -48285,7 +48284,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79f1f06f3a52f644892ce27554dd7a1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  field: {fileID: 11021588}
 --- !u!1 &1843351758
 GameObject:
   m_ObjectHideFlags: 0

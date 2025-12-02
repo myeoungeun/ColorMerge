@@ -58,9 +58,9 @@ namespace PinkDatatable
 
 		public System.Int32 level;
 		public System.Single scale;
-		public System.Single weight;
-		public System.Single spring;
+		public System.Single mass;
 		public System.Single bounciness;
+		public System.Single friction;
 		public System.Single correction;
 		public System.String description;
   

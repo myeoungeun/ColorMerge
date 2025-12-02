@@ -14,7 +14,6 @@ public class GameManager : Singleton<GameManager>
         DataManager.Instance.Initialize();
     }
     
-    //시간 체크 + 기본 색상 나누기 + 경고 등등
     private void Update()
     {
         _time += Time.deltaTime;

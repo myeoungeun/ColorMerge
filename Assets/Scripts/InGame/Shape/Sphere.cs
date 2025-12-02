@@ -7,6 +7,7 @@ public class Sphere : ShapeBase
 {
     public override void Init()
     {
+        shapeType = ShapeType.Sphere;
         ShapePhysicsData sphereData = shapePhysicsData.GetShapePhysicsData(1);
         
         float mass = sphereData.mass;
@@ -18,9 +19,5 @@ public class Sphere : ShapeBase
         rb.angularDrag = angularDrag;
         phyMat.bounciness = bounciness;
         phyMat.dynamicFriction = friction;
-    }
-
-    public override void ShapeMerge(int level)
-    {
     }
 }

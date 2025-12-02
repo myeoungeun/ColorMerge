@@ -17,6 +17,7 @@ public class Tetrahedron : ShapeBase
     
     public override void Init()
     {
+        shapeType = ShapeType.Tetrahedron;
         ShapePhysicsData pyramidData = shapePhysicsData.GetShapePhysicsData(2);
         
         float mass = pyramidData.mass;
@@ -28,10 +29,6 @@ public class Tetrahedron : ShapeBase
         rb.angularDrag = angularDrag;
         phyMat.bounciness = bounciness;
         phyMat.dynamicFriction = friction;
-    }
-
-    public override void ShapeMerge(int level)
-    {
     }
 
     void OnValidate()

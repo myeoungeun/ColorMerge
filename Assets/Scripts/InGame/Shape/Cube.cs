@@ -7,6 +7,7 @@ public class Cube : ShapeBase
 {
     public override void Init()
     {
+        shapeType = ShapeType.Cube;
         ShapePhysicsData cubeData = shapePhysicsData.GetShapePhysicsData(0);
         
         float mass = cubeData.mass;
@@ -18,9 +19,5 @@ public class Cube : ShapeBase
         rb.angularDrag = angularDrag;
         phyMat.bounciness = bounciness;
         phyMat.dynamicFriction = friction;
-    }
-
-    public override void ShapeMerge(int level)
-    {
     }
 }

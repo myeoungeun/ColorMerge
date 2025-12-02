@@ -7,11 +7,13 @@ using Util;
 public class ShapeBase : MonoBehaviour
 {
     public Color color;
+    public ShapeType shapeType;
     protected Renderer rend;
     protected int curLevel;
     protected Rigidbody rb;
     protected Material mat; //시각용
     protected PhysicMaterial phyMat; //물리 충돌용
+    protected Transform t;
     
     protected ShapeLevelData shapeLevelData;
     protected ShapePhysicsData shapePhysicsData;
@@ -27,8 +29,8 @@ public class ShapeBase : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("ShapeBase Start");
         phyMat = new PhysicMaterial();
+        t = GetComponent<Transform>();
         rb = GetComponent<Rigidbody>();
         rend = GetComponent<Renderer>();
         
@@ -45,16 +47,22 @@ public class ShapeBase : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         ShapeBase otherShape = collision.gameObject.GetComponent<ShapeBase>();
-        if (otherShape != null) //todo : && otherShape가 같은 레벨 + 같은 도형이라면
+        
+        if (TypeAndLevelCheck(otherShape)) //otherShape가 같은 도형 + 같은 레벨이면
         {
-            //색상 합치기
+            //색상 합치기 todo : 체크 필요함
             color = PinkCalculate.ColorMerge(color, otherShape.color);
             GetComponent<Renderer>().material.color = color;
             
             //도형 합치기
             ShapeMerge(curLevel);
-            //Destroy(otherShape.gameObject);
+            Destroy(otherShape.gameObject);
         }
+    }
+
+    private bool TypeAndLevelCheck(ShapeBase otherShape)
+    {
+        return otherShape != null && otherShape.shapeType == shapeType && otherShape.curLevel == curLevel;
     }
 
     public virtual void Init() //각각의 물리 엔진
@@ -64,8 +72,20 @@ public class ShapeBase : MonoBehaviour
     public virtual void ShapeMerge(int level) //도형 합치기
     {
         level += 1;
-        curLevel = shapeLevelData.GetShapeLevelData(level).level;
-        //todo : 크기 업그레이드 + 실제 도형에 적용
+        if (level >= 7) level = 7; //현재는 하드코딩이라 나중에 더 추가할거라면 수정 필요함
+        
+        ShapeLevelData curLevelData = shapeLevelData.GetShapeLevelData(level);
+        curLevel = curLevelData.level;
+        float scale = curLevelData.scale;
+        float mass = curLevelData.mass;
+        float bounciness = curLevelData.bounciness;
+        float friction = curLevelData.bounciness;
+        float correction = curLevelData.correction;
+
+        t.localScale = new Vector3(scale, scale, scale);
+        rb.mass *= mass;
+        phyMat.bounciness *= bounciness;
+        phyMat.dynamicFriction *= friction;
     }
 
     protected void InitColor()

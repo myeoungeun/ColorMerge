@@ -19,6 +19,13 @@ public enum ColorPhase
     Survival
 }
 
+public enum ShapeType
+{
+    Cube,
+    Sphere,
+    Tetrahedron
+}
+
 public class DataManager : Singleton<DataManager>
 {
     public ColorSpawnData Color;

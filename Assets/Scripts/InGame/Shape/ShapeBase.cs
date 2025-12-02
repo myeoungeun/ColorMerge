@@ -15,6 +15,7 @@ public class ShapeBase : MonoBehaviour
     protected PhysicMaterial phyMat; //물리 충돌용
     protected Transform t;
     private bool becamePink;
+    GameObject particle;
     
     protected ShapeLevelData shapeLevelData;
     protected ShapePhysicsData shapePhysicsData;
@@ -57,8 +58,13 @@ public class ShapeBase : MonoBehaviour
             if (becamePink)
             {
                 Debug.Log("분홍입니다!");
-                //Destroy(gameObject);
-                //터지는 효과
+                particle = Instantiate(Resources.Load<GameObject>("Particle/ExplodeParticle"), gameObject.transform.position, Quaternion.identity);
+                ParticleSystem ps = particle.GetComponent<ParticleSystem>();
+                if (ps != null)
+                {
+                    Destroy(particle, ps.main.duration + ps.main.startLifetime.constantMax);
+                }
+                StartCoroutine(ShapeDestroy(1));
                 GameManager.Instance.AddScore(1);
             }
             
@@ -66,6 +72,12 @@ public class ShapeBase : MonoBehaviour
             ShapeMerge(curLevel);
             Destroy(otherShape.gameObject);
         }
+    }
+
+    private IEnumerator ShapeDestroy(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Destroy(gameObject);
     }
 
     private bool TypeAndLevelCheck(ShapeBase otherShape)

@@ -9,6 +9,7 @@ public class GameManager : Singleton<GameManager>
     private int _curScore = 0;
     private ColorPhase _colorPhase;
     public ColorPhase ColorPhase => _colorPhase;
+    public GameObject field;
     
     private void Awake()
     {
@@ -45,5 +46,13 @@ public class GameManager : Singleton<GameManager>
     {
         _curScore += score;
         UIManager.Instance.UpdateScore(_curScore);
+    }
+
+    private void FieldWarning()
+    {
+    }
+
+    private void GameOver()
+    {
     }
 }

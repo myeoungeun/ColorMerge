@@ -22,7 +22,7 @@ public class SwipeAndDrop : MonoBehaviour
     public Transform _rangeParent;
     private float _radius = 5.5f;
     private List<Transform> _rangeList = new();
-
+    
     void Start()
     {
         physicsData = DataManager.Instance.Physics;
@@ -118,8 +118,10 @@ public class SwipeAndDrop : MonoBehaviour
                 _shapeIndex.RemoveAt(0);
             }
 
-            if(_shapeIndex.Count > 0 && _shapeIndex[0] != null)
+            if (_shapeIndex.Count > 0 && _shapeIndex[0] != null)
+            {
                 _shapeIndex[0].SetActive(true);
+            }
         }
     }
     

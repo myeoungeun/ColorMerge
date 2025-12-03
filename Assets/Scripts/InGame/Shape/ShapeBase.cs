@@ -94,7 +94,7 @@ public class ShapeBase : MonoBehaviour
     public virtual void ShapeMerge(int level) //도형 합치기
     {
         level += 1;
-        if (level >= 7) level = 7; //현재는 하드코딩이라 나중에 더 추가할거라면 수정 필요함
+        if (level >= 8) level = 8; //현재는 하드코딩이라 나중에 더 추가할거라면 수정 필요함
         
         ShapeSetting(level);
     }

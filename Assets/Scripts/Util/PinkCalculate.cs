@@ -16,7 +16,7 @@ public static class PinkCalculate
         float valScore = 100f - (Mathf.Abs(v - 0.55f) * 200f);
 
         float pinkValue = (hueScore * 0.6f) + (satScore * 0.25f) + (valScore * 0.15f);
-        return pinkValue >= 80f; //분홍이면 리턴
+        return pinkValue >= 90f; //분홍이면 리턴
     }
 
     public static Color ColorMerge(Color color1, Color color2, out bool isPink) //색상 합치기

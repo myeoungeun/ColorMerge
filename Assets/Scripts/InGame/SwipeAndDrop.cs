@@ -9,12 +9,14 @@ public class SwipeAndDrop : MonoBehaviour
     public Camera camera;
 
     public bool isDrag = false;
+    private float _radius = 6f;
     private Vector3 _beginMousePos;
     private Vector3 _lastMousePos;
     private string _shapePath;
     private float _sensitivity = 0.1f;
     private float _dragDistance = 5f; //드래그로 판단할 최소 이동량
     private ShapePhysicsData physicsData;
+    private List<GameObject> _shapeIndex = new();
 
     void Start()
     {
@@ -67,13 +69,34 @@ public class SwipeAndDrop : MonoBehaviour
         if (_lastMousePos.x <= -4) _lastMousePos.x = -4;
         if (_lastMousePos.x >= 4) _lastMousePos.x = 4;
 
-        RandomShapeDrop();
-        if(_shapePath != null) Instantiate(Resources.Load<GameObject>(_shapePath), _lastMousePos, Quaternion.identity, target);
+        if(_shapeIndex.Count < 3) CreateShape(); //미리보기 없으면 생성
+
+        if (_shapeIndex.Count > 0) //첫 번째 도형 꺼내서 드랍
+        {
+            GameObject obj = _shapeIndex[0];
+            obj.transform.position = _lastMousePos;
+            obj.SetActive(true);
+            _shapeIndex.RemoveAt(0);
+        }
     }
     
-    private void RandomShapeDrop()
+    private void CreateShape()
     {
-        int range = Random.Range(0, 3); //나중에 계속 도형 추가할 거라면 db 가져와서 개수 안에서 랜덤값 돌리는 걸로 수정 필요함 
-        _shapePath = physicsData.GetShapePhysicsData(range).path;
+        //랜덤 도형 선정
+        Vector3 pos = new Vector3(27, 1, 0);
+
+        for (int i = 0; i < 3; i++)
+        {
+            int range = Random.Range(0, 3); //나중에 계속 도형 추가할 거라면 db 가져와서 개수 안에서 랜덤값 돌리는 걸로 수정 필요함 
+            _shapePath = physicsData.GetShapePhysicsData(range).path;
+
+            if (_shapePath != null)
+            {
+                GameObject obj = Instantiate(Resources.Load<GameObject>(_shapePath), pos, Quaternion.identity, target);
+                obj.SetActive(false);
+                _shapeIndex.Add(obj);
+            }
+        }
+        _shapeIndex[1].SetActive(true); //todo : 수정 필요함
     }
 }

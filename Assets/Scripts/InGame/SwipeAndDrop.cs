@@ -17,6 +17,7 @@ public class SwipeAndDrop : MonoBehaviour
     private ShapePhysicsData physicsData;
     private List<GameObject> _shapeIndex = new();
     private int _MaxCount = 2;
+    private bool _isDrop = false;
     
     public Transform _rangeParent;
     private float _radius = 5.5f;
@@ -56,8 +57,13 @@ public class SwipeAndDrop : MonoBehaviour
         
         if (Input.GetMouseButtonUp(0))
         {
+            Debug.Log("Click");
             isDrag = false;
-            ClickToDrop();
+            if (!_isDrop)
+            {
+                _isDrop = true;
+                StartCoroutine(DelayDrop());
+            }
         }
     }
     
@@ -79,10 +85,18 @@ public class SwipeAndDrop : MonoBehaviour
 
     private void ClickToDrop()
     {
+        Debug.Log("ClickToDrop");
         _lastMousePos = Input.mousePosition;
         _lastMousePos.z = Mathf.Abs(camera.transform.position.z - target.position.z); //카메라-타겟 거리
         _lastMousePos = camera.ScreenToWorldPoint(_lastMousePos);
         if(_lastMousePos.y > 10) ShapeDrop(); //도형 떨어뜨리기 -> 위에서만 동작
+    }
+
+    private IEnumerator DelayDrop()
+    {
+        ClickToDrop();
+        yield return new WaitForSeconds(0.5f);
+        _isDrop = false;
     }
 
     private void ShapeDrop()

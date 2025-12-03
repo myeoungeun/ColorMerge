@@ -62,15 +62,16 @@ public class SwipeAndDrop : MonoBehaviour
     
     void CheckRangeObjects()
     {
-        _rangeList.Clear();
-
         float range = 5f; // 중앙 target에서 반지름 범위
         foreach (Transform child in target)
         {
             if (Vector3.Distance(child.position, target.position) <= range)
             {
-                _rangeList.Add(child);
-                child.parent = _rangeParent;
+                if (!_rangeList.Contains(child))
+                {
+                    _rangeList.Add(child);
+                    child.parent = _rangeParent;
+                }
             }
         }
     }

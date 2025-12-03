@@ -103,10 +103,9 @@ public class SwipeAndDrop : MonoBehaviour
     {
         //높이 + 좌우 거리 제한
         _lastMousePos.y = 18;
-        if (_lastMousePos.x <= -4) _lastMousePos.x = -4;
-        if (_lastMousePos.x >= 4) _lastMousePos.x = 4;
+        _lastMousePos.x = Mathf.Clamp(_lastMousePos.x, -4f, 4f);
 
-        if(_shapeIndex.Count < 3) CreateShape(); //미리보기 없으면 생성
+        if(_shapeIndex.Count < _MaxCount) CreateShape(); //미리보기 없으면 생성
 
         if (_shapeIndex.Count > 0) //첫 번째 도형 꺼내서 드랍
         {
@@ -118,9 +117,9 @@ public class SwipeAndDrop : MonoBehaviour
                 _shapeIndex.RemoveAt(0);
             }
 
-            if (_shapeIndex.Count > 0 && _shapeIndex[0] != null)
+            for (int i = 0; i < _shapeIndex.Count; i++)
             {
-                _shapeIndex[0].SetActive(true);
+                if(_shapeIndex[i] != null) _shapeIndex[i].SetActive(i == 0);
             }
         }
     }

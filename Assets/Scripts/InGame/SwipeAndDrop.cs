@@ -9,7 +9,6 @@ public class SwipeAndDrop : MonoBehaviour
     public Camera camera;
 
     public bool isDrag = false;
-    private float _radius = 6f;
     private Vector3 _beginMousePos;
     private Vector3 _lastMousePos;
     private string _shapePath;
@@ -17,10 +16,15 @@ public class SwipeAndDrop : MonoBehaviour
     private float _dragDistance = 5f; //드래그로 판단할 최소 이동량
     private ShapePhysicsData physicsData;
     private List<GameObject> _shapeIndex = new();
+    
+    public Transform _rangeParent;
+    private float _radius = 5.5f;
+    private List<Transform> _rangeList = new();
 
     void Start()
     {
         physicsData = DataManager.Instance.Physics;
+        _rangeList.Add(target);
     }
 
     void Update()
@@ -30,6 +34,8 @@ public class SwipeAndDrop : MonoBehaviour
             _beginMousePos = Input.mousePosition;
             _lastMousePos = _beginMousePos;
             isDrag = false; //처음엔 드래그 아님
+
+            CheckRangeObjects();
         }
         
         if (Input.GetMouseButton(0))
@@ -42,7 +48,7 @@ public class SwipeAndDrop : MonoBehaviour
             if (isDrag)
             {
                 Vector3 delta = Input.mousePosition - _lastMousePos;
-                target.Rotate(0f, delta.x * _sensitivity, 0f, Space.World); //회전
+                _rangeParent.Rotate(0f, delta.x * _sensitivity, 0f, Space.World); //회전
                 _lastMousePos = Input.mousePosition;
             }
         }
@@ -51,6 +57,21 @@ public class SwipeAndDrop : MonoBehaviour
         {
             isDrag = false;
             ClickToDrop();
+        }
+    }
+    
+    void CheckRangeObjects()
+    {
+        _rangeList.Clear();
+
+        float range = 5f; // 중앙 target에서 반지름 범위
+        foreach (Transform child in target)
+        {
+            if (Vector3.Distance(child.position, target.position) <= range)
+            {
+                _rangeList.Add(child);
+                child.parent = _rangeParent;
+            }
         }
     }
 

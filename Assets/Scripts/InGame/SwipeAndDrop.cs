@@ -16,6 +16,7 @@ public class SwipeAndDrop : MonoBehaviour
     private float _dragDistance = 5f; //드래그로 판단할 최소 이동량
     private ShapePhysicsData physicsData;
     private List<GameObject> _shapeIndex = new();
+    private int _MaxCount = 2;
     
     public Transform _rangeParent;
     private float _radius = 5.5f;
@@ -99,17 +100,20 @@ public class SwipeAndDrop : MonoBehaviour
             obj.transform.position = _lastMousePos;
             obj.SetActive(true);
             _shapeIndex.RemoveAt(0);
+            
+            if(_shapeIndex[0] != null && _shapeIndex.Count > 0)
+                _shapeIndex[0].SetActive(true);
         }
     }
     
     private void CreateShape()
     {
-        //랜덤 도형 선정
         Vector3 pos = new Vector3(27, 1, 0);
+        int toCreate = _MaxCount - _shapeIndex.Count;
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < toCreate; i++)
         {
-            int range = Random.Range(0, 3); //나중에 계속 도형 추가할 거라면 db 가져와서 개수 안에서 랜덤값 돌리는 걸로 수정 필요함 
+            int range = Random.Range(0, 3); //나중에 계속 도형 추가할 거라면 db 가져와서 개수 안에서 랜덤값 돌리는 걸로 수정 필요함. 랜덤 도형 선택 
             _shapePath = physicsData.GetShapePhysicsData(range).path;
 
             if (_shapePath != null)
@@ -119,6 +123,5 @@ public class SwipeAndDrop : MonoBehaviour
                 _shapeIndex.Add(obj);
             }
         }
-        _shapeIndex[1].SetActive(true); //todo : 수정 필요함
     }
 }

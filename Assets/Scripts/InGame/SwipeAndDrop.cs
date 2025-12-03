@@ -111,11 +111,14 @@ public class SwipeAndDrop : MonoBehaviour
         if (_shapeIndex.Count > 0) //첫 번째 도형 꺼내서 드랍
         {
             GameObject obj = _shapeIndex[0];
-            obj.transform.position = _lastMousePos;
-            obj.SetActive(true);
-            _shapeIndex.RemoveAt(0);
-            
-            if(_shapeIndex[0] != null && _shapeIndex.Count > 0)
+            if (obj != null)
+            {
+                obj.transform.position = _lastMousePos;
+                obj.SetActive(true);
+                _shapeIndex.RemoveAt(0);
+            }
+
+            if(_shapeIndex.Count > 0 && _shapeIndex[0] != null)
                 _shapeIndex[0].SetActive(true);
         }
     }

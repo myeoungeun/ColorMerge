@@ -50,7 +50,6 @@ public class GameManager : Singleton<GameManager>
     public void GameOver()
     {
         Debug.Log("게임 오버!");
-        Time.timeScale = 0; //나중에 수정 필요함
         GameObject canvas = GameObject.Find("Canvas");
         Instantiate(Resources.Load<GameObject>("UI/GameOverUI"), canvas.transform);
     }

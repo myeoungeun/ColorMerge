@@ -9,7 +9,6 @@ public class GameOverUI : MonoBehaviour
     public void ReStartGame()
     {
         Destroy(gameObject);
-        Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 

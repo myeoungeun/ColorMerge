@@ -16,7 +16,7 @@ public class SwipeAndDrop : MonoBehaviour
     private float _dragDistance = 5f; //드래그로 판단할 최소 이동량
     private ShapePhysicsData physicsData;
     private List<GameObject> _shapeIndex = new();
-    private int _MaxCount = 2;
+    private int _MaxCount = 5;
     private bool _isDrop = false;
     
     public Transform _rangeParent;

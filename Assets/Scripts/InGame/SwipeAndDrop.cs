@@ -6,6 +6,7 @@ using UnityEngine;
 public class SwipeAndDrop : MonoBehaviour
 {
     public Transform target;
+    public Transform previewParent;
     public Camera camera;
 
     public bool isDrag = false;
@@ -36,8 +37,6 @@ public class SwipeAndDrop : MonoBehaviour
             _beginMousePos = Input.mousePosition;
             _lastMousePos = _beginMousePos;
             isDrag = false; //처음엔 드래그 아님
-
-            CheckRangeObjects();
         }
         
         if (Input.GetMouseButton(0))
@@ -50,7 +49,7 @@ public class SwipeAndDrop : MonoBehaviour
             if (isDrag)
             {
                 Vector3 delta = Input.mousePosition - _lastMousePos;
-                _rangeParent.Rotate(0f, delta.x * _sensitivity, 0f, Space.World); //회전
+                target.Rotate(0f, delta.x * _sensitivity, 0f, Space.World); //회전
                 _lastMousePos = Input.mousePosition;
             }
         }
@@ -58,27 +57,12 @@ public class SwipeAndDrop : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             Debug.Log("Click");
+            Debug.Log("isDrop : " + _isDrop);
             isDrag = false;
             if (!_isDrop)
             {
                 _isDrop = true;
                 StartCoroutine(DelayDrop());
-            }
-        }
-    }
-    
-    void CheckRangeObjects()
-    {
-        float range = 5f; // 중앙 target에서 반지름 범위
-        foreach (Transform child in target)
-        {
-            if (Vector3.Distance(child.position, target.position) <= range)
-            {
-                if (!_rangeList.Contains(child))
-                {
-                    _rangeList.Add(child);
-                    child.parent = _rangeParent;
-                }
             }
         }
     }
@@ -95,7 +79,7 @@ public class SwipeAndDrop : MonoBehaviour
     private IEnumerator DelayDrop()
     {
         ClickToDrop();
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
         _isDrop = false;
     }
 
@@ -112,6 +96,8 @@ public class SwipeAndDrop : MonoBehaviour
             GameObject obj = _shapeIndex[0];
             if (obj != null)
             {
+                obj.tag = "Shape";
+                obj.transform.parent = target;
                 obj.transform.position = _lastMousePos;
                 obj.SetActive(true);
                 _shapeIndex.RemoveAt(0);
@@ -136,7 +122,8 @@ public class SwipeAndDrop : MonoBehaviour
 
             if (_shapePath != null)
             {
-                GameObject obj = Instantiate(Resources.Load<GameObject>(_shapePath), pos, Quaternion.identity, target);
+                GameObject obj = Instantiate(Resources.Load<GameObject>(_shapePath), pos, Quaternion.identity, previewParent);
+                obj.tag = "Preview";
                 obj.SetActive(false);
                 _shapeIndex.Add(obj);
             }

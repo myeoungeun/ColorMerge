@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using PinkDatatable;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class SwipeAndDrop : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class SwipeAndDrop : MonoBehaviour
     private float _sensitivity = 0.1f;
     private float _dragDistance = 5f; //드래그로 판단할 최소 이동량
     private ShapePhysicsData physicsData;
-    private List<GameObject> _shapeIndex = new();
+    private Queue<GameObject> _shapeIndex = new();
     private int _MaxCount = 5;
     private bool _isDrop = false;
     
@@ -60,6 +61,13 @@ public class SwipeAndDrop : MonoBehaviour
             }
         }
     }
+    
+    private IEnumerator DelayDrop()
+    {
+        ClickToDrop();
+        yield return new WaitForSeconds(0.5f);
+        _isDrop = false;
+    }
 
     private void ClickToDrop()
     {
@@ -69,14 +77,7 @@ public class SwipeAndDrop : MonoBehaviour
         _lastMousePos = camera.ScreenToWorldPoint(_lastMousePos);
         if(_lastMousePos.y > 10) ShapeDrop(); //도형 떨어뜨리기 -> 위에서만 동작
     }
-
-    private IEnumerator DelayDrop()
-    {
-        ClickToDrop();
-        yield return new WaitForSeconds(0.2f);
-        _isDrop = false;
-    }
-
+    
     private void ShapeDrop()
     {
         //높이 + 좌우 거리 제한
@@ -84,23 +85,23 @@ public class SwipeAndDrop : MonoBehaviour
         _lastMousePos.x = Mathf.Clamp(_lastMousePos.x, -4f, 4f);
 
         if(_shapeIndex.Count < _MaxCount) CreateShape(); //미리보기 없으면 생성
+        Debug.Log("ShapeDrop");
+        
+        _shapeIndex.Peek().SetActive(true);
 
         if (_shapeIndex.Count > 0) //첫 번째 도형 꺼내서 드랍
         {
-            GameObject obj = _shapeIndex[0];
+            GameObject obj = _shapeIndex.Dequeue();
             if (obj != null)
             {
                 obj.tag = "Shape";
+                obj.GetComponent<Rigidbody>().useGravity = true;
+                obj.GetComponent<Collider>().isTrigger = false;
                 obj.transform.parent = target;
+                Debug.Log(_lastMousePos);
                 obj.transform.position = _lastMousePos;
-                obj.SetActive(true);
-                _shapeIndex.RemoveAt(0);
             }
-
-            for (int i = 0; i < _shapeIndex.Count; i++)
-            {
-                if(_shapeIndex[i] != null) _shapeIndex[i].SetActive(i == 0);
-            }
+            _shapeIndex.Peek().SetActive(true);
         }
     }
     
@@ -118,8 +119,10 @@ public class SwipeAndDrop : MonoBehaviour
             {
                 GameObject obj = Instantiate(Resources.Load<GameObject>(_shapePath), pos, Quaternion.identity, previewParent);
                 obj.tag = "Preview";
+                obj.GetComponent<Rigidbody>().useGravity = false;
+                obj.GetComponent<Collider>().isTrigger = true;
                 obj.SetActive(false);
-                _shapeIndex.Add(obj);
+                _shapeIndex.Enqueue(obj);
             }
         }
     }

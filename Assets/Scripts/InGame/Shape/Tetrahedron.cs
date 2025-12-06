@@ -82,5 +82,12 @@ public class Tetrahedron : ShapeBase
         mesh.vertices = vertices;
         mesh.triangles = triangles;
         mesh.RecalculateNormals();
+        mesh.RecalculateBounds();
+
+        if (mc != null)
+        {
+            mc.sharedMesh = null;
+            mc.sharedMesh = mesh;
+        }
     }
 }

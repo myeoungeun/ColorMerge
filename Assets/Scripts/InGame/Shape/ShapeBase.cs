@@ -67,7 +67,7 @@ public class ShapeBase : MonoBehaviour
                     Destroy(particle, ps.main.duration + ps.main.startLifetime.constantMax);
                 }
                 StartCoroutine(ShapeDestroy(1));
-                GameManager.Instance.AddScore(1);
+                GameManager.Instance.AddScore(1 * curLevel);
             }
             
             //도형 합치기

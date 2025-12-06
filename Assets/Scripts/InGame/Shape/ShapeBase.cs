@@ -59,6 +59,7 @@ public class ShapeBase : MonoBehaviour
             if (becamePink)
             {
                 Debug.Log("분홍입니다!");
+                GetComponent<ShakeShape>().Shake(); //흔들기
                 particle = Instantiate(Resources.Load<GameObject>("Particle/ExplodeParticle"), gameObject.transform.position, Quaternion.identity);
                 ParticleSystem ps = particle.GetComponent<ParticleSystem>();
                 if (ps != null)

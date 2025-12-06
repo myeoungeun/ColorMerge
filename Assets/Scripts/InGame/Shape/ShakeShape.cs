@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ShakeShape : MonoBehaviour
 {
-    public float duration = 0.2f;
-    public float strength = 0.05f;
+    public float duration = 2f;
+    public float strength = 0.1f;
 
     private Vector3 originalPos;
 

@@ -5,21 +5,25 @@ using UnityEngine;
 
 public static class PinkCalculate
 {
-    public static bool PinkCheck(Color color)
+    public static bool PinkCheck(Color color, float pinkCorrection = 0)
     {
         Color.RGBToHSV(color, out float h, out float s, out float v); // v = lightness
 
         float hueDegree = h * 360f;
-        float hueDiff = Mathf.Min(Mathf.Abs(hueDegree - 0f), 360f - Mathf.Abs(hueDegree - 0f));
-        float hueScore = 100f - (hueDiff / 180f * 100f);
-        float satScore = s * 100f;
-        float valScore = 100f - (Mathf.Abs(v - 0.55f) * 200f);
+        float minHue = 295f;
+        float maxHue = 330f;
+        
+        maxHue += pinkCorrection; //핑크 보정
 
-        float pinkValue = (hueScore * 0.6f) + (satScore * 0.25f) + (valScore * 0.15f);
-        return pinkValue >= 90f; //분홍이면 리턴
+        bool hueOK = hueDegree >= minHue && hueDegree <= maxHue;
+        bool satOK = s >= 0.3f;
+        bool valueOK = v >= 0.60f && v <= 1.0f;
+
+        Debug.Log($"분홍 체크 : {hueOK && satOK && valueOK}");
+        return hueOK && satOK && valueOK; //분홍이면 리턴
     }
 
-    public static Color ColorMerge(Color color1, Color color2, out bool isPink) //색상 합치기
+    public static Color ColorMerge(Color color1, Color color2, out bool isPink, float pinkCorrection) //색상 합치기
     {
         Color.RGBToHSV(color1, out float h1, out float s1, out float v1);
         Color.RGBToHSV(color2, out float h2, out float s2, out float v2);
@@ -36,7 +40,7 @@ public static class PinkCalculate
         float val = (v1 * w1 + v2 * w2) / wSum;
         
         Color mergedColor = Color.HSVToRGB(hue, sat, val);
-        isPink = PinkCheck(mergedColor);
+        isPink = PinkCheck(mergedColor, pinkCorrection);
 
         return mergedColor;
     }

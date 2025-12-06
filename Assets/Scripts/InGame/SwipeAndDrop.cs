@@ -52,7 +52,6 @@ public class SwipeAndDrop : MonoBehaviour
         
         if (Input.GetMouseButtonUp(0))
         {
-            Debug.Log("Click, isDrop : " + _isDrop);
             isDrag = false;
             if (!_isDrop)
             {
@@ -71,7 +70,6 @@ public class SwipeAndDrop : MonoBehaviour
 
     private void ClickToDrop()
     {
-        Debug.Log("ClickToDrop");
         _lastMousePos = Input.mousePosition;
         _lastMousePos.z = Mathf.Abs(camera.transform.position.z - target.position.z); //카메라-타겟 거리
         _lastMousePos = camera.ScreenToWorldPoint(_lastMousePos);
@@ -85,7 +83,6 @@ public class SwipeAndDrop : MonoBehaviour
         _lastMousePos.x = Mathf.Clamp(_lastMousePos.x, -4f, 4f);
 
         if(_shapeIndex.Count < _MaxCount) CreateShape(); //미리보기 없으면 생성
-        Debug.Log("ShapeDrop");
         
         _shapeIndex.Peek().SetActive(true);
 
@@ -98,7 +95,6 @@ public class SwipeAndDrop : MonoBehaviour
                 obj.GetComponent<Rigidbody>().useGravity = true;
                 obj.GetComponent<Collider>().isTrigger = false;
                 obj.transform.parent = target;
-                Debug.Log(_lastMousePos);
                 obj.transform.position = _lastMousePos;
             }
             _shapeIndex.Peek().SetActive(true);

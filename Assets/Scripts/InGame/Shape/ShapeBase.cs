@@ -15,6 +15,7 @@ public class ShapeBase : MonoBehaviour
     protected PhysicMaterial phyMat; //물리 충돌용
     protected Transform t;
     private bool becamePink;
+    private float PinkCorrection;
     GameObject particle;
     
     protected ShapeLevelData shapeLevelData;
@@ -53,7 +54,7 @@ public class ShapeBase : MonoBehaviour
         if (TypeAndLevelCheck(otherShape)) //otherShape가 같은 도형 + 같은 레벨이면
         {
             //색상 합치기
-            color = PinkCalculate.ColorMerge(color, otherShape.color, out becamePink);
+            color = PinkCalculate.ColorMerge(color, otherShape.color, out becamePink, PinkCorrection);
             GetComponent<Renderer>().material.color = color;
             if (becamePink)
             {
@@ -73,16 +74,16 @@ public class ShapeBase : MonoBehaviour
             Destroy(otherShape.gameObject);
         }
     }
+    
+    private bool TypeAndLevelCheck(ShapeBase otherShape)
+    {
+        return otherShape != null && otherShape.shapeType == shapeType && otherShape.curLevel == curLevel;
+    }
 
     private IEnumerator ShapeDestroy(float delay)
     {
         yield return new WaitForSeconds(delay);
         Destroy(gameObject);
-    }
-
-    private bool TypeAndLevelCheck(ShapeBase otherShape)
-    {
-        return otherShape != null && otherShape.shapeType == shapeType && otherShape.curLevel == curLevel;
     }
 
     public virtual void Init() //각각의 물리 엔진
@@ -107,7 +108,7 @@ public class ShapeBase : MonoBehaviour
         float mass = curLevelData.mass;
         float bounciness = curLevelData.bounciness;
         float friction = curLevelData.bounciness;
-        float correction = curLevelData.correction;
+        PinkCorrection = curLevelData.correction;
 
         t.localScale = new Vector3(scale, scale, scale);
         rb.mass *= mass;

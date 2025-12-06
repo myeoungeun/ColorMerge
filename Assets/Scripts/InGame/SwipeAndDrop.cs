@@ -20,14 +20,9 @@ public class SwipeAndDrop : MonoBehaviour
     private int _MaxCount = 5;
     private bool _isDrop = false;
     
-    public Transform _rangeParent;
-    private float _radius = 5.5f;
-    private List<Transform> _rangeList = new();
-    
     void Start()
     {
         physicsData = DataManager.Instance.Physics;
-        _rangeList.Add(target);
     }
 
     void Update()
@@ -56,8 +51,7 @@ public class SwipeAndDrop : MonoBehaviour
         
         if (Input.GetMouseButtonUp(0))
         {
-            Debug.Log("Click");
-            Debug.Log("isDrop : " + _isDrop);
+            Debug.Log("Click, isDrop : " + _isDrop);
             isDrag = false;
             if (!_isDrop)
             {
